@@ -19,8 +19,9 @@ unFocus.FlashPlayerInfo = (function() {
 	
 	// detection work
 	if (navigator.plugins && navigator.plugins.length > 0) {
-		_versionRaw = (navigator.plugins["Shockwave Flash 2.0"] || navigator.plugins["Shockwave Flash"]).description;
+		_versionRaw = navigator.plugins["Shockwave Flash 2.0"] || navigator.plugins["Shockwave Flash"];
 		if (_versionRaw) {
+			_versionRaw = _versionRaw.description;
 			_installed = true;
 			_playerType = 'PlugIn';
 			if (/Shockwave Flash/.test(_versionRaw)) {
