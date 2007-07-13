@@ -1,14 +1,7 @@
 /*
-	unFocusFlash, version 1.7.2 (beta) (2006/04/26)
-	Copyright: 2004-2006, Kevin Newman (http://www.unfocus.com/)
-	License: http://creativecommons.org/licenses/LGPL/2.1/
-
-	Version History
-	1.0 - initial release
-	1.1 - added mousewheel event forwarder - updates the flash variable UnfocusFlashWheelEvent
-	1.2 - removed large portions (migrated to unFocusFlashCommunicator).
-	
-	1.5a - complete rewrite/rename getting ready for 2.0
+	unFocus.SwfHTML, version 2.0 (beta 1) (2007/07/13)
+	Copyright: 2004-2007, Kevin Newman (http://www.unfocus.com/projects/)
+	License: http://www.gnu.org/licenses/lgpl.html
 */
 // Package: unFocus.SwfTools
 if (!window.unFocus) var unFocus = {};
@@ -18,7 +11,8 @@ Class: SwfHTML
 	A class for assembling and outputting html for a Swf file.
 	
 References:
-	<http://www.adobe.com/cfusion/knowledgebase/index.cfm?id=tn_12701>
+	<http://www.adobe.com/go/tn_12701>
+	<http://www.adobe.com/go/tn_16588>
 */
 unFocus.SwfHTML = function() {
 	this._properties = {};
@@ -31,8 +25,7 @@ unFocus.SwfHTML = function() {
 	this._betaVersion = 0;
 	this._src = "";
 };
-// setters check against valid values
-// ref http://www.adobe.com/cfusion/knowledgebase/index.cfm?id=tn_12701
+// setters check against valid values http://www.adobe.com/go/tn_12701
 unFocus.SwfHTML.prototype = {
 	// Method: setSrc
 	//	Sets the Src of the swf file.
@@ -226,8 +219,10 @@ unFocus.SwfHTML.prototype = {
 		}
 		
 		if ($ActiveX) {
-			$html = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"';
-			$html += ' codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version='+this._version+","+this.majorRevision+","+this._minorRevision+","+this._betaVersion+'"';
+			$html = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="';
+			// solve https popup issue http://www.adobe.com/go/tn_16588
+			$html += /^https/.test(window.location)?"https":"http";
+			$html += '://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version='+this._version+","+this.majorRevision+","+this._minorRevision+","+this._betaVersion+'"';
 		} else
 			$html = "<embed";
 		
@@ -254,60 +249,7 @@ unFocus.SwfHTML.prototype = {
 		else
 			$html += '" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>';
 		return $html;
-	}/*,
-	
-	// much information for the following methods came from the sifr project
-	// :TODO: replace this with a simple xhtml compliant node generator - leave the detection to another method
-	getNodeObject: function() {
-		// initialize local variables
-		var $key, _nodeObject, $ActiveX = typeof ActiveXObject != "undefined" && window.print && !window.opera;
-		
-		if (this._src) {
-			if ($ActiveX)
-				this._params.movie = this._src;
-			else
-				this._properties.src = this._src;
-		}
-		
-		if ($ActiveX) {
-			_nodeObject = document.createElement("object");
-			_nodeObject.classid = "clsid:D27CDB6E-AE6D-11cf-96B8-444553540000";
-			_nodeObject.codebase = "http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version="+this._version+","+this.majorRevision+","+this._minorRevision+","+this._betaVersion;
-		} else {
-			_nodeObject = document.createElement("embed");
-			_nodeObject.type = "application/x-shockwave-flash";
-			_nodeObject.pluginspage = "http://www.macromedia.com/go/getflashplayer";
-		}
-		
-		// output  properties
-		for ($key in this._properties)
-			_nodeObject[$key] = this._properties[$key];
-	
-		if ($ActiveX) {
-			var _param = document.createElement("param");
-			for ($key in this._params) {
-				_param.name = $key;
-				_param.value = this._params[$key];
-				_nodeObject.appendChild(_param);
-			}
-			if (this._flashvars) {
-				_param.name = "flashvars";
-				_param.value = this._flashvars;
-				_nodeObject.appendChild(_param);
-			}
-		} else {
-			for ($key in this._params)
-				_nodeObject[$key] = this._params[$key];
-			if (this._flashvars)
-				_nodeObject.flashvars = this._flashvars;
-		}
-		
-		return _nodeObject;
-		
-	},
-	appendToNode: function($node) {
-		return false;
-	}*/
+	}
 };
 
 // :NOTE: These can't be compressed within an eval, if they are it triggers the IE patent thingy
