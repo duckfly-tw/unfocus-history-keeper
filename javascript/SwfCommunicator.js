@@ -1,6 +1,16 @@
-/*	unFocusFlashCommunicator, version 0.8 (alpha) (2006/03/10)
-	Copyright: 2005-2006, Kevin Newman (http://www.unfocus.com/)
-	License: http://creativecommons.org/licenses/LGPL/2.1/ */
+/*
+unFocus.SwfCommunicator, version 0.8 (alpha) (2007/07/17)
+Copyright: 2005-2007, Kevin Newman (http://www.unfocus.com/Projects/)
+
+This file is part of unFocus.History Keeper.
+
+unFocus.History Keeper is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
+
+unFocus.History Keeper is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 // set up function for IE to use to create the fscommand catcher
 /*if (window.ActiveXObject && window.print && !window.opera)
 	// Communicator.vbs
