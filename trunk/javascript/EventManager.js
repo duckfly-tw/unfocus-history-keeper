@@ -1,8 +1,16 @@
-/**
- * unFocus.EventManager, version 1.0b (beta) (2005/12/16)
- * Copyright: 2005, Kevin Newman (http://www.unfocus.com/Projects/)
- * License: http://creativecommons.org/licenses/LGPL/2.1/
-**/
+/*
+unFocus.EventManager, version 1.0b (beta) (2007/07/17)
+Copyright: 2005-2007, Kevin Newman (http://www.unfocus.com/Projects/)
+
+This file is part of unFocus.History Keeper.
+
+unFocus.History Keeper is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
+
+unFocus.History Keeper is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 // Package: unFocus.Utilities
 // make sure faux-namespace is available before adding to it
 if (!window.unFocus) var unFocus = {};
