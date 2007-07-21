@@ -1,5 +1,5 @@
 /*
-unFocus.FlashPlayerInfo, version 1.1 b4 (beta) (2007/07/17)
+unFocus.FlashPlayerInfo, version 1.1 b5 (beta) (2007/07/21)
 Copyright: 2005-2007, Kevin Newman (http://www.unfocus.com/Projects/)
 
 This file is part of unFocus.History Keeper.
@@ -22,7 +22,7 @@ unFocus.FlashPlayerInfo = (function() {
 		_minorRevision = 0,
 		_betaVersion = 0,
 		_versionRaw = "",
-		_pluginType = "",
+		_playerType = "",
 		_releaseCode = "";
 	
 	// detection work
@@ -31,7 +31,7 @@ unFocus.FlashPlayerInfo = (function() {
 		if (_versionRaw) {
 			_versionRaw = _versionRaw.description;
 			_installed = true;
-			_playerType = 'PlugIn';
+			_playerType = "PlugIn";
 			if (/Shockwave Flash/.test(_versionRaw)) {
 				_version = _versionRaw.match(/Shockwave Flash (\d)\.(\d)/);
 				_majorRevision = _version[2];
@@ -64,7 +64,7 @@ unFocus.FlashPlayerInfo = (function() {
 		function _parseVersion() {
 			var _versionTemp = _ax.GetVariable("$version");
 			_versionRaw = _versionTemp;
-			_versionTemp = _versionTemp.split(',');
+			_versionTemp = _versionTemp.split(",");
 			_version = _versionTemp[0].match(/\d+/);
 			_majorRevision = _versionTemp[1];
 			_minorRevision = _versionTemp[2];
@@ -79,8 +79,15 @@ unFocus.FlashPlayerInfo = (function() {
 			_parseVersion();
 		else if (_getActiveXObject("ShockwaveFlash.ShockwaveFlash.6")) {
 			// tread lightly
-			_version = 6;
-			_minorRevision = -1; // cannot be safely detected
+			try {
+				// will throw error if < 6.0.47 (info glombed from Adobe's Detection Kit - thanks!)
+				_ax.AllowScriptAccess = "always";
+				// now safe to call GetVariable
+				_parseVersion();
+			} catch (e) {
+				_version = 6;
+				_minorRevision = 0; // cannot be safely detected
+			}
 		} else if (_getActiveXObject("ShockwaveFlash.ShockwaveFlash.5"))
 			_parseVersion();
 		else if (_getActiveXObject("ShockwaveFlash.ShockwaveFlash.4"))
@@ -126,8 +133,12 @@ unFocus.FlashPlayerInfo = (function() {
 		getVersionRaw: function() {
 			return _versionRaw;
 		},
+		// for backward compat - deprecated, will be removed in next version
 		getPluginType: function() {
-			return _pluginType;
+			return this.getPlayerType();
+		},
+		getPlayerType: function() {
+			return _playerType;
 		},
 		getReleaseCode: function() {
 			return _releaseCode;
