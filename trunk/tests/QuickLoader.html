@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>QuickLoader</title>
+<!--
+unFocus.Tests (2007/07/21)
+Copyright: 2007, Kevin Newman (http://www.unfocus.com/Projects/)
+
+This file is part of unFocus.History Keeper.
+
+unFocus.History Keeper is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
+
+unFocus.History Keeper is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<script type="text/javascript" src="../javascript/EventManager.js"></script>
+<script type="text/javascript" src="../javascript/QuickLoader.js"></script>
+</head>
+
+<body onLoad="alert('body tag onload called');">
+<p>Testing QuickLoader (you should get an alert box with "Quick Loader called" first.</p>
+<script type="text/javascript">
+unFocus.Utilities.QuickLoader.addListener(function() {
+	alert('Quick Loader called');
+});
+// borrowed from Dean Edwards (thanks Dean!)
+// create a unique image source so that this page works with continued testing
+var src = "http://www.nasa.gov/images/content/84857main_EC04-0325-23_lg.jpg?" + Number(new Date);
+document.write("<img src=" + src + " height=240 width=300>");
+</script>
+</body>
+</html>
