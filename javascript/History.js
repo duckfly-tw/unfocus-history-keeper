@@ -76,11 +76,11 @@ function Keeper() {
 	function _createAnchor($newHash) {
 		if (!_checkAnchorExists($newHash)) {
 			var $anchor;
-			$anchor.setAttribute("name", $newHash);
 			if (/MSIE/.test(navigator.userAgent) && !window.opera)
 				$anchor = document.createElement('<a name="'+$newHash+'">'+$newHash+"</a>");
 			else
 				$anchor = document.createElement("a");
+			$anchor.setAttribute("name", $newHash);
 			with ($anchor.style) {
 				position = "absolute";
 				display = "block";
