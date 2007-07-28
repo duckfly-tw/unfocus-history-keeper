@@ -21,12 +21,25 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 <body>
 <script type="text/javascript">
-// import classes from unFocus.SwfTools namespace (in style only of course)
-with (unFocus) {
-	document.write(FlashPlayerInfo.getVersion() +'.'+ FlashPlayerInfo.getMajorRevision() +' r' + FlashPlayerInfo.getMinorRevision());
-	if (FlashPlayerInfo.isBeta()) document.write(' '+FlashPlayerInfo.getReleaseCode() + FlashPlayerInfo.getBetaVersion());
-	document.write(' : ' + FlashPlayerInfo.getVersionRaw() + '<br />');
-}
+var fpInfo = unFocus.FlashPlayerInfo;
+
+document.write (
+	"<table><tbody>",
+	"<tr><td>isInstalled() </td><td>"					+ fpInfo.isInstalled(),
+	"</td></tr><tr><td>isBeta() </td><td>"				+ fpInfo.isBeta(),
+	"</td></tr><tr><td>getVersion() </td><td>"			+ fpInfo.getVersion(),
+	"</td></tr><tr><td>getMinorRevision() </td><td>"	+ fpInfo.getMinorRevision(),
+	"</td></tr><tr><td>getMajorRevision() </td><td>"	+ fpInfo.getMajorRevision(),
+	"</td></tr><tr><td>getVersionRaw() </td><td>"		+ fpInfo.getVersionRaw(),
+	"</td></tr><tr><td>getPlayerType() </td><td>"		+ fpInfo.getPlayerType(),
+	"</td></tr><tr><td>getReleaseCode() </td><td>"		+ fpInfo.getReleaseCode(),
+	"</td></tr></tbody></table>"
+);
+document.write("<br>");
+document.write(fpInfo.getVersion() +'.'+ fpInfo.getMajorRevision() +' r' + fpInfo.getMinorRevision());
+if (fpInfo.isBeta()) document.write(' '+fpInfo.getReleaseCode() + fpInfo.getBetaVersion());
+document.write(' : ' + fpInfo.getVersionRaw());
+
 </script>
 </body>
 </html>

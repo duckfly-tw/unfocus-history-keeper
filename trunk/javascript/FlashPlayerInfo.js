@@ -36,7 +36,7 @@ unFocus.FlashPlayerInfo = (function() {
 				_version = _versionRaw.match(/Shockwave Flash (\d)\.(\d)/);
 				_majorRevision = _version[2];
 				if (/r\d+/.test(_versionRaw)) {
-					_releaseCode = 'r';
+					_releaseCode = "r";
 					_minorRevision = _versionRaw.match(/r(\d+)/)[1];
 				}
 				_version = _version[1];
@@ -69,9 +69,9 @@ unFocus.FlashPlayerInfo = (function() {
 			_majorRevision = _versionTemp[1];
 			_minorRevision = _versionTemp[2];
 			_betaVersion = _versionTemp[3];
-			if (_versionTemp[3]) _beta = true;
+			if (_versionTemp[3]>0) _beta = true;
 			// if the last number is 0, assume this is a release version
-			else _releaseCode = 'r';
+			else _releaseCode = "r";
 		}
 		
 		// we have to detect around Flash 6, since it can crash some versions of IE
