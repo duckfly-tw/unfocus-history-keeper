@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>Flash Player Detect</title>
+<title>Test - unFocus.History Keeper</title>
 <!--
 unFocus.Tests (2007/07/21)
 Copyright: 2007, Kevin Newman (http://www.unfocus.com/Projects/)
@@ -20,6 +20,8 @@ You should have received a copy of the GNU Lesser General Public License along w
 </head>
 
 <body>
+<p>unFocus.History Keeper, Testing <strong>unFocus.FlashPlayerInfo</strong>:</p>
+<p>Testing</p>
 <script type="text/javascript">
 var fpInfo = unFocus.FlashPlayerInfo;
 
@@ -37,9 +39,13 @@ document.write (
 );
 document.write("<br>");
 document.write(fpInfo.getVersion() +'.'+ fpInfo.getMajorRevision() +' r' + fpInfo.getMinorRevision());
-if (fpInfo.isBeta()) document.write(' '+fpInfo.getReleaseCode() + fpInfo.getBetaVersion());
+if (fpInfo.isBeta())
+	document.write(' '+fpInfo.getReleaseCode() + fpInfo.getBetaVersion());
 document.write(' : ' + fpInfo.getVersionRaw());
-
 </script>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Some releases of the Flash Player which are labeled as beta, and have an internal beta number (like 9.0.60.xx) contain the release code of &quot;r&quot;, which I assumed meant release at one point. So there is no real good way to test for beta status, except to check the $version variable from within Flash, in PlugIn based Players.</li>
+</ul>
 </body>
 </html>
