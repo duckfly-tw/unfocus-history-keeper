@@ -1,5 +1,5 @@
 /*
-unFocus.SwfHTML, version 2.0 (beta 1) (2007/07/17)
+unFocus.SwfHTML, version 2.0 (beta 2) (2007/09/11)
 Copyright: 2005-2007, Kevin Newman (http://www.unfocus.com/Projects/)
 
 This file is part of unFocus.History Keeper.

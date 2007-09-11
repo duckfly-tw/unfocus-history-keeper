@@ -1,5 +1,5 @@
 /*
-unFocus.FlashPlayerInfo, version 1.1 b5 (beta) (2007/07/21)
+unFocus.FlashPlayerInfo, version 1.1 b6 (beta) (2007/09/11)
 Copyright: 2005-2007, Kevin Newman (http://www.unfocus.com/Projects/)
 
 This file is part of unFocus.History Keeper.
