@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>QuickLoader</title>
+<!--
+unFocus.Tests (2007/09/11)
+Copyright: 2007, Kevin Newman (http://www.unfocus.com/Projects/)
+
+This file is part of unFocus.History Keeper.
+
+unFocus.History Keeper is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
+
+unFocus.History Keeper is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<script type="text/javascript" src="../unFocus-History-p.js"></script>
+<script type="text/javascript">
+// My mini "Ajax" (DHTML) app
+function PromptMe() {
+	// some application vars
+	var stateVar = "nothin'", displayDiv = document.getElementById("HistoryState");
+	
+	// the sole public method to manipulate this application
+	this.promtForNew = function() {
+		// do the stuff that changes the state
+		var newVal = window.prompt("Please enter some value to store in the history and url");
+		// Set the new history hash. This value must be a string, so serializtion is up to you.
+		// JSON works nicely, if you need something quick: http://www.json.org
+		// When a new entry is made, unFocus.History will notify the historyListener 
+		// method of the change, even on the first call. For this demo app we can 
+		// rely on the historyListener method to update the state, and view.
+		unFocus.History.addHistory(newVal);
+	};
+	
+	// This is the method that will recieve notifications from the History Keeper,
+	// which will then update the state of the app.
+	// :NOTE: This will be called when a new entry is added.
+	// :NOTE: This will be called if another app on the page sets a history,
+	//        so you will need to watch out for this, if you have more than
+	//        one script using the history keeper, by doing some kind of 
+	//        check to make sure that the new hash belongs to this app.
+	//        I wouldn't expect this to be a problem all that frequently.
+	this.historyListener = function(historyHash) {
+		// update the stateVar
+		stateVar = historyHash;
+		// update display content
+		displayDiv.innerHTML = "Current History: " + historyHash;
+		// update document title
+		document.title = "unFocus History Keeper - Current History: " + historyHash;
+	};
+	// subscribe to unFocus.History
+	unFocus.History.addEventListener('historyChange', this.historyListener);
+	
+	// Check for an initial value (deep link).
+	// In this demo app, the historyListener can handle the task.
+	this.historyListener(unFocus.History.getCurrent());
+};
+// instantiate and inialize the app. DOM has to be ready so we can get a ref to
+// the HistoryState DOM element (aka the view), so we use QuickLoader to make
+// sure it's ready.
+var demoApp;
+</script>
+</head>
+
+<body onLoad="demoApp = new PromptMe();">
+<p id="HistoryState">Current State Value: nothin'</p>
+<a href="#" onClick="demoApp.promtForNew();return false;">Add a History Entry</a>
+</body>
+</html>

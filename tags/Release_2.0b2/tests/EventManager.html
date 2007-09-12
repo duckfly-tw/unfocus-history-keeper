@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Test - unFocus.EventManager</title>
+<!--
+unFocus.Tests (2007/09/11)
+Copyright: 2007, Kevin Newman (http://www.unfocus.com/Projects/)
+
+This file is part of unFocus.History Keeper.
+
+unFocus.History Keeper is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
+
+unFocus.History Keeper is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<script type="text/javascript" src="../javascript/EventManager.js"></script>
+<script type="text/javascript">
+var foo = new unFocus.EventManager("one", "two");
+
+function tester1() {
+	alert('test set 1 - 1');
+}
+function tester2() {
+	alert('test set 1 - 2');
+}
+function tester3() {
+	alert('test set 1 - 3');
+}
+function tested1() {
+	alert('test set 2 - 1');
+}
+function tested2() {
+	alert('test set 2 - 2');
+}
+function tested3() {
+	alert('test set 2 - 3');
+}
+foo.addEventListener("one", tester1);
+foo.addEventListener("one", tester2);
+foo.addEventListener("one", tester3);
+
+foo.addEventListener("two", tested1);
+foo.addEventListener("two", tested2);
+foo.addEventListener("two", tested3);
+</script>
+</head>
+
+<body>
+<p>unFocus.History Keeper, Testing <strong>unFocus.EventManager</strong>:</p>
+<p>Testing</p>
+<p><a href="#" onClick="foo.notifyListeners('one');return false;">One</a>
+<a href="#" onClick="foo.notifyListeners('two');return false;">Two</a></p>
+</body>
+</html>
