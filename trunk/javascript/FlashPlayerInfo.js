@@ -1,6 +1,6 @@
 /*
-unFocus.FlashPlayerInfo, version 1.1 b6 (beta) (2007/09/11)
-Copyright: 2005-2007, Kevin Newman (http://www.unfocus.com/Projects/)
+unFocus.FlashPlayerInfo, version 1.1 b7 (beta) (2008/05/20)
+Copyright: 2005-2008, Kevin Newman (http://www.unfocus.com/Projects/)
 
 This file is part of unFocus.History Keeper.
 
@@ -33,7 +33,7 @@ unFocus.FlashPlayerInfo = (function() {
 			_installed = true;
 			_playerType = "PlugIn";
 			if (/Shockwave Flash/.test(_versionRaw)) {
-				_version = _versionRaw.match(/Shockwave Flash (\d)\.(\d)/);
+				_version = _versionRaw.match(/Shockwave Flash (\d+)\.(\d+)/);
 				_majorRevision = _version[2];
 				if (/r\d+/.test(_versionRaw)) {
 					_releaseCode = "r";
