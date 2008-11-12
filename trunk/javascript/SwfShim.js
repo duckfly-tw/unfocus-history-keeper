@@ -19,8 +19,10 @@ Class: SwfHTML
 References:
 	<http://www.adobe.com/go/tn_12701>
 	<http://www.adobe.com/go/tn_16588>
+	<http://code.google.com/p/swfobject/wiki/faq>
 */
 unFocus.SwfShim = function(shimSwfUrl) {
+	unFocus.SwfHTML.call(this);
 	/*if (!shimSwfUrl && !unFocus.SwfShim.shimSwfUrl)
 		throw new Error (
 			"MissingArgument", 
@@ -31,14 +33,6 @@ unFocus.SwfShim = function(shimSwfUrl) {
 // static properties and methods
 //SwfShim.shimSwfUrl = "";
 with (unFocus) {
-	//SwfShim.shimSwfUrl = "";
-	SwfShim.EIRegistry = {};
-	SwfShim.EIResultsMsg = function(id,msg) {
-		SwfShim.EIRegistry[id](msg);
-	};
-	SwfShim.EIRegister = function(id,method) {
-		SwfShim.EIRegistry[id] = method;
-	};
 	// :NOTE: this is relative to the document, not this js source file
 	SwfShim.shimSwfUrl = "SwfShim.swf";
 }
@@ -49,17 +43,21 @@ unFocus.SwfShim.prototype = {
 	_MMdocumentTitle: escape(document.title),
 	_MMredirectURL: escape(window.location),
 	// :NOTE: This should be overridden by the user.
-	ExpressInstallCallback: function(){},
-	_useExpressInstall: false,
+	eiCallbackName: false,
+	expressInstall: false,
 	getHTML: function() {
+		var theHTML;
 		unFocus.SwfHTML.prototype.setSrc.call(this,this._shimSwfUrl);
-		this.addFlashvar("unFocusMovieSrc", this._realSrc);
-		if (this._useExpressInstall) {
-			this.addFlashvar("unFocusVersion", this._version);
+		this.addFlashvar("movieSrc", this._realSrc);
+		
+		if (this.expressInstall) {
+			this.addFlashvar("useExpressInstall", "true");
+			this.addFlashvar("reqVersion", this._version);
+			this.addFlashvar("reqMajorRevision", this._majorRevision);
+			this.addFlashvar("reqMinorRevision", this._minorRevision);
 			
-			this.addFlashvar("unFocusMajorRevision", this._majorRevision);
-			this.addFlashvar("unFocusMinorRevision", this._majorRevision);
-			this.addFlashvar("unFocusBetaVersion", this._betaVersion);
+			var version = this._version,
+				minorRev = this._minorRevision;
 			
 			this.setVersion(6);
 			this.setMinorRevision(65);
@@ -67,26 +65,21 @@ unFocus.SwfShim.prototype = {
 			this.addFlashvar("MMdocumentTitle", this._MMdocumentTitle);
 			this.addFlashvar("MMredirectURL", this._MMredirectURL);
 			
-			if (!this._properties.id)
-				this.setID("shimID_" + Math.floor(Math.random()*1000000));
-			var swfID = this._properties.id;
-			this.addFlashvar("unFocusSwfID", swfID);
+			if (this.eiCallbackName)
+				this.addFlashvar("eiCallbackName", this.eiCallbackName);
 			
-			if (/*@cc_on!@*/0) {
-				// use SwfCommunicator.vbs to add the fscommand catcher method if needed
-				if (
-					typeof unFocusCreateFSCommand != "undefined" && 
-					!window[swfID+"_FSCommand"]
-				)
-					unFocusCreateFSCommand(swfID);
+			if (/*@cc_on!@*/0)
 				this.addFlashvar("MMplayerType", "ActiveX");
-			} else {
+			else
 				this.addFlashvar("MMplayerType", "PlugIn");
-			}
 			
-			// handles cases when users can't upgrade with EI or chooses not to
-			unFocus.SwfShim.EIRegister(swfID, this.ExpressInstallCallback);
+			theHTML = unFocus.SwfHTML.prototype.getHTML.apply(this);
+			
+			this.setVersion(version);
+			this.setMinorRevision(minorRev);
 		}
+		else
+			theHTML = unFocus.SwfHTML.prototype.getHTML.apply(this);
 		// return unFocus.SwfHTML.getHTML.apply(this);
 		return unFocus.SwfHTML.prototype.getHTML.apply(this);
 	},
@@ -99,10 +92,10 @@ unFocus.SwfShim.prototype = {
 	setMMredirectURL: function(url) {
 		this._MMredirectURL = url;
 	},
-	setExpressInstallCallback: function(method) {
-		this.ExpressInstallCallback = method;
+	setExpressInstallCallback: function(methodName) {
+		this.eiCallbackName = methodName;
 	},
 	useExpressInstall: function(useEI) {
-		this._useExpressInstall = useEI;	
+		this.expressInstall = useEI;	
 	}
 }
