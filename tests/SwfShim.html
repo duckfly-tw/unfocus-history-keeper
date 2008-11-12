@@ -142,31 +142,17 @@ You should have received a copy of the GNU Lesser General Public License along w
 	hp_bl_HTML.setWMode('opaque');
 	hp_bl_HTML.setBGColor('#FFFFFF');
 	
-	//hp_bl_HTML.addFlashvar('movieSrc', 'test9.swf');
-	//hp_bl_HTML.setSrc('_javascript/unFocusShim.swf');
-	
 	hp_bl_HTML.setSrc('test9.swf');
 	
-	//hp_bl_HTML.addFlashvar('requireVersion', '9');
-	//hp_bl_HTML.addFlashvar('requireMinorVersion', '28');
-	//hp_bl_HTML.addFlashvar('useExpressInstall', 'true');
+	hp_bl_HTML.setVersion(10);
 	hp_bl_HTML.useExpressInstall(true);
-	
-	//hp_bl_HTML.addFlashvar('MMredirectURL', window.location);
-	//hp_bl_HTML.addFlashvar('MMdocumentTitle', document.title);
-	//hp_bl_HTML.addFlashvar('MMplayerType', FlashPlayerInfo.getPlayerType());
-	
+	function hp_bl_HTML_Callback(msg) {
+		alert(msg);
+	}
+	hp_bl_HTML.setExpressInstallCallback("hp_bl_HTML_Callback");
 	hp_bl_HTML.addFlashvar('flashvar1', 'test value, as3');
-	
 	hp_bl_HTML.writeToDocument(document);
 	
-	/*function hp_bl_swf_DoFSCommand(cmd,args) {
-		hp_bl_elm.innerHTML += hp_bl_nonflash;
-		var swfElm = document.getElementById(hp_bl_ID);
-		swfElm.style.display = "none";
-		swfElm.style.position = "absolute";
-		swfElm.style.top = "-300px";
-	}*/
 </script>
 </body>
 </html>
