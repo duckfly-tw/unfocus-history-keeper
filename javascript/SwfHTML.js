@@ -1,6 +1,6 @@
 /*
-unFocus.SwfHTML, version 2.0 (beta 2) (2007/09/11)
-Copyright: 2005-2007, Kevin Newman (http://www.unfocus.com/Projects/)
+unFocus.SwfHTML, version 2.0 (svn $Revision$) $Date$
+Copyright: 2005-2008, Kevin Newman (http://www.unfocus.com/Projects/)
 
 This file is part of unFocus.History Keeper.
 
@@ -65,28 +65,28 @@ unFocus.SwfHTML.prototype = {
 		if (typeof $swliveconnect == "boolean")
 			this._params.swliveconnect = $swliveconnect;
 		else
-			throw new Error("InvalidValue", "Valid Values for swliveconnect: true, false");
+			throw "SwfHTML.setSwliveconnect Error: Valid Values for swliveconnect: true, false";
 	},
 	setPlay: function($play) {
 		if (typeof $play == "boolean")
 			this._params.play= $play;
 		else
-			throw new Error("InvalidValue", "Valid Values for play: true, false");
+			throw "SwfHTML.setPlay Error: Valid Values for play: true, false";
 	},
 	setLoop: function($loop) {
 		if (typeof $loop == "boolean")
 			this._params.loop= $loop;
 		else
-			throw new Error("InvalidValue", "Valid Values for loop: true, false");
+			throw "SwfHTML.setLoop Error: Valid Values for loop: true, false";
 	},
 	setMenu: function($menu) {
 		if (typeof $menu == "boolean")
 			this._params.menu= $menu;
 		else
-			throw new Error("InvalidValue", "Valid Values for menu: true, false");
+			throw "SwfHTML.setMenu Error: Valid Values for menu: true, false";
 	},
 	setQuality: function($quality) {
-		switch ($quality) {
+		switch ($quality.toLowerCase()) {
 			case "low":
 			case "medium":
 			case "high":
@@ -96,11 +96,11 @@ unFocus.SwfHTML.prototype = {
 				this._params.quality = $quality; /* low, medium, high, autolow, autohigh, best */
 				break;
 			default:
-				throw new Error("InvalidValue", "Valid Values for quality: low, medium, high, autolow, autohigh, best");
+				throw "SwfHTML.setQuality Error: Valid Values for quality: low, medium, high, autolow, autohigh, best";
 		}
 	},
 	setScale: function($scale) {
-		switch ($scale) {
+		switch ($scale.toLowerCase()) {
 			case "showall":
 			case "noborder":
 			case "exactfit":
@@ -108,11 +108,11 @@ unFocus.SwfHTML.prototype = {
 				this._params.scale = $scale; /* showall, noborder, exactfit, noscale (missing from the documentation) */
 				break;
 			default:
-				throw new Error("InvalidValue", "Valid Values for scale: showall, noborder, exactfit, noscale");
+				throw "SwfHTML.setScale Error: Valid Values for scale: showall, noborder, exactfit, noscale";
 		}
 	},
 	setAlign: function($align) { // :NOTE: There is a conflict here - you can set align on the html element, as well as for the movie. Hhow does this sort out for embed?
-		switch ($align) {
+		switch ($align.toLowerCase()) {
 			case "l":
 			case "t":
 			case "r":
@@ -120,11 +120,11 @@ unFocus.SwfHTML.prototype = {
 				this._params.align = $align; /* l, t, r, b (defaults to center, which isn't in the list) */
 				break;
 			default:
-				throw new Error("InvalidValue", "Valid Values for align: l, t, r, b");
+				throw "SwfHTML.setAlign Error: Valid Values for align: l, t, r, b";
 		}
 	},
 	setSAlign: function($salign) {
-		switch ($salign) {
+		switch ($salign.toLowerCase()) {
 			case "l":
 			case "t":
 			case "r":
@@ -136,26 +136,27 @@ unFocus.SwfHTML.prototype = {
 				this._params.salign = $salign;
 				break;
 			default:
-				throw new Error("InvalidValue", "Valid Values for salign: l, t, r, b, tl, tr, bl, br");
+				throw "SwfHTML.setSAlign Error: Valid Values for salign: l, t, r, b, tl, tr, bl, br";
 		}
 	},
 	setWMode: function($wmode) {
-		switch($wmode) {
+		switch($wmode.toLowerCase()) {
 			case "window":
 			case "opaque":
 			case "transparent":
+			case "direct":
+			case "gpu":
 				this._params.wmode = $wmode;
 				break;
 			default:
-				throw new Error("InvalidValue", "Valid Values for wmode: window, opaque, transparent");
+				throw "SwfHTML.setWMode Error: Valid Values for wmode: window, opaque, transparent";
 		}
 	},
 	setBGColor: function($bgcolor) {
-		// /^#[\dA-Fa-f]{6}$/
-		if (/^#[\dA-F]{6}$/.test($bgcolor))
-			this._params.bgcolor = $bgcolor; /* #RRGGBB, hexadecimal RGB value */
+		if (/^#[\dA-F]{6}$/i.test($bgcolor))
+			this._params.bgcolor = $bgcolor.toUpperCase(); /* #RRGGBB, hexadecimal RGB value */
 		else
-			throw new Error("InvalidValue", "Valid Values for bgcolor: a valid html color hex value (#0099FF)");
+			throw "SwfHTML.setBGColor Error: Valid Values for bgcolor: a valid html color hex value (#0099FF)";
 	},
 	setBase: function($base) {
 		this._params.base = $base;
@@ -170,13 +171,13 @@ unFocus.SwfHTML.prototype = {
 	
 	// http://www.macromedia.com/cfusion/knowledgebase/index.cfm?id=tn_16494
 	setAllowscriptaccess: function($allowscriptaccess) {
-		switch ($allowscriptaccess) {
+		switch ($allowscriptaccess.toLowerCase()) {
 			case "never":
 			case "always":
 				this._params.allowscriptaccess = $allowscriptaccess;
 				break;
 			default:
-				throw new Error("InvalidValue", "Valid Values for allowscriptaccess: never, always");
+				throw "SwfHTML.setAllowscriptaccess Error: Valid Values for allowscriptaccess: never, always";
 		}
 	},
 	
@@ -207,7 +208,7 @@ unFocus.SwfHTML.prototype = {
 		if (typeof $allowFullScreen == "boolean")
 			this._params.allowFullScreen= $allowFullScreen;
 		else
-			throw new Error("InvalidValue", "Valid Values for allowFullScreen: true, false");
+			throw "SwfHTML.setAllowFullScreen Error: Valid Values for allowFullScreen: true, false";
 	},
 	
 	/**
