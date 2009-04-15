@@ -19,13 +19,11 @@ You should have received a copy of the GNU Lesser General Public License along w
 */
 unFocus.History = (function() {
 
-// use a closure to avoid poluting the global scope, and to discourage reinstantiation (like a singleton)
 function Keeper() {
-	// bool: initialize - whether or not the class has been initialized
+	
 	var _this = this,
 		// set the poll interval here.
 		_pollInterval = 200, _intervalID,
-		// get the initial Hash state
 		_currentHash;
 
 	/*
@@ -63,12 +61,12 @@ function Keeper() {
 			_this.notifyListeners("historyChange", $newHash);
 		}
 	}
-	// set the interval
+	// Put the hash check on a timer.
 	if (setInterval) _intervalID = setInterval(_watchHash, _pollInterval);
 	
 	/*
 	method: getCurrentBookmark
-		A public method to retrieve the current history string
+		A public method to retrieve the current history string.
 	
 	returns:
 		The current History Hash
@@ -186,6 +184,11 @@ function Keeper() {
 	// IE 5.5+ Windows
 	} else if (typeof ActiveXObject != "undefined" && window.print && 
 			   !window.opera && navigator.userAgent.match(/MSIE (\d+\.\d+)/)[1] >= 5.5) {
+		
+		// :HACK: Quick and dirty IE8 support (makes IE8 use standard timer method).
+		if (navigator.userAgent.match(/MSIE (\d+\.\d+)/)[1] >= 8)
+			return;
+		
 		/* iframe references */
 		var _historyFrameObj, _historyFrameRef;
 		
@@ -242,30 +245,29 @@ function Keeper() {
 		_this._updateFromHistory = function() {
 			_this._updateFromHistory = updateFromHistory;
 		};
-		//if (navigator.userAgent.match(/MSIE (\d\.\d)/)[1] < 5.5) {
-			function addHistoryIE($newHash) { // adds history and bookmark hash
-				if (_currentHash != $newHash) {
-					// IE will create an entry if there is an achor on the page, but it
-					// does not allow you to detect the state change, so we skip inserting an Anchor
-					_currentHash = $newHash;
-					// sets hash and notifies listeners
-					_createHistoryHTML($newHash);
-				}
-				return true;
-			};
-			_this.addHistory = function($newHash) {
-				// do initialization stuff on first call
-				_createHistoryFrame();
-				
-				// replace this function with a slimmer one on first call
-				_this.addHistory = addHistoryIE;
-				// call the first call
-				return _this.addHistory($newHash);
-			};
-			// anonymouse method - subscribe to self to update the hash when the history is updated
-			_this.addEventListener("historyChange", function($hash) { _setHash($hash) });
-		//} else { /* IE 5.0 */ }
-	
+
+		function addHistoryIE($newHash) { // adds history and bookmark hash
+			if (_currentHash != $newHash) {
+				// :NOTE: IE will create an entry if there is an achor on the page, but it
+				// does not allow you to detect the state change.
+				_currentHash = $newHash;
+				// sets hash and notifies listeners
+				_createHistoryHTML($newHash);
+			}
+			return true;
+		};
+		_this.addHistory = function($newHash) {
+			// do initialization stuff on first call
+			_createHistoryFrame();
+			
+			// replace this function with a slimmer one on first call
+			_this.addHistory = addHistoryIE;
+			// call the first call
+			return _this.addHistory($newHash);
+		};
+		// anonymous method - subscribe to self to update the hash when the history is updated
+		_this.addEventListener("historyChange", function($hash) { _setHash($hash) });
+		
 	}
 }
 Keeper.prototype = new unFocus.EventManager("historyChange");
