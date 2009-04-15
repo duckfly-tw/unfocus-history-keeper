@@ -1,6 +1,6 @@
 /*
-unFocus.History, version 2.0 (beta 1) (2007/09/11)
-Copyright: 2005-2007, Kevin Newman (http://www.unfocus.com/Projects/)
+unFocus.History, version 2.0 (beta 1) (2009/04/15)
+Copyright: 2005-2009, Kevin Newman (http://www.unfocus.com/)
 
 This file is part of unFocus.History Keeper.
 
@@ -66,56 +66,6 @@ function Keeper() {
 	// set the interval
 	if (setInterval) _intervalID = setInterval(_watchHash, _pollInterval);
 	
-	/* 
-	Method: _createAnchor
-		Various browsers may need an achor to be present in the dom for the hash to actually be set,
-		so we add one every time a history entry is made. This has a side effect in many browsers, 
-		where if the scroll position of the page is changed, in between history states, this causes
-		most browsers to remember the position! It's a bonus.
-	*/
-	function _createAnchor($newHash) {
-		if (!_checkAnchorExists($newHash)) {
-			var $anchor;
-			if (/MSIE/.test(navigator.userAgent) && !window.opera)
-				$anchor = document.createElement('<a name="'+$newHash+'">'+$newHash+"</a>");
-			else
-				$anchor = document.createElement("a");
-			$anchor.setAttribute("name", $newHash);
-			with ($anchor.style) {
-				position = "absolute";
-				display = "block";
-				top = getScrollY()+"px";
-				left = getScrollX()+"px";
-			}
-			//$anchor.style.display = 'none';
-			//$anchor.innerHTML = $newHash;
-			document.body.insertBefore($anchor,document.body.firstChild);
-			//document.body.appendChild($anchor);
-		}
-	}
-	// simplified function contributed by Micah Goulart
-	function _checkAnchorExists($name) {
-		if (document.getElementsByName($name).length > 0)
-			return true;
-	}
-	// Keeps IE 5.0 from scrolling to the top every time a new history is entered.
-	// Also retains the scroll position in the history (doesn't seem to work on IE 5.5+).
-	if (typeof self.pageYOffset == "number") {
-		function getScrollY() {
-			return self.pageYOffset;
-		}
-	} else if (document.documentElement && document.documentElement.scrollTop) {
-		function getScrollY() {
-			return document.documentElement.scrollTop;
-		}
-	} else if (document.body) {
-		function getScrollY() {
-			return document.body.scrollTop;
-		}
-	}
-	// clone getScrollY to getScrollX
-	eval(String(getScrollY).toString().replace(/Top/g,"Left").replace(/Y/g,"X"));
-	
 	/*
 	method: getCurrentBookmark
 		A public method to retrieve the current history string
@@ -135,21 +85,13 @@ function Keeper() {
 	returns:
 		Boolean - true if supported and set, false if not
 	*/
-	function addHistory($newHash) {
+	_this.addHistory = function addHistory($newHash) {
 		if (_currentHash != $newHash) {
-			_createAnchor($newHash);
 			_currentHash = $newHash;
 			_setHash($newHash);
 			_this.notifyListeners("historyChange",$newHash);
 		}
 		return true;
-	}
-	_this.addHistory = function($newHash) { // adds history and bookmark hash
-		_createAnchor(_currentHash);
-		// replace with slimmer versions...
-		_this.addHistory = addHistory;
-		// ...do first call
-		return _this.addHistory($newHash);
 	};
 
 	/**
@@ -196,7 +138,6 @@ function Keeper() {
 		
 		function addHistorySafari($newHash) {
 			if (_currentHash != $newHash) {
-				_createAnchor($newHash);
 				_currentHash = $newHash;
 				_unFocusHistoryLength = history.length+1;
 				_recentlyAdded = true;
@@ -209,8 +150,6 @@ function Keeper() {
 		
 		// provide alternative addHistory
 		_this.addHistory = function($newHash) { // adds history and bookmark hash
-			// on first call, make an anchor for the root history entry
-			_createAnchor(_currentHash);
 			// setup the form fix
 			_createSafariSetHashForm();
 			
@@ -246,7 +185,7 @@ function Keeper() {
 		
 	// IE 5.5+ Windows
 	} else if (typeof ActiveXObject != "undefined" && window.print && 
-			   !window.opera && navigator.userAgent.match(/MSIE (\d\.\d)/)[1] >= 5.5) {
+			   !window.opera && navigator.userAgent.match(/MSIE (\d+\.\d+)/)[1] >= 5.5) {
 		/* iframe references */
 		var _historyFrameObj, _historyFrameRef;
 		
