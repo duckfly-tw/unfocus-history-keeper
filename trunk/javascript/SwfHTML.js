@@ -231,7 +231,7 @@ unFocus.SwfHTML.prototype = {
 			$html = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="';
 			// solve https popup issue http://www.adobe.com/go/tn_16588
 			$html += /^https/.test(window.location)?"https":"http";
-			$html += '://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version='+this._version+","+this.majorRevision+","+this._minorRevision+","+this._betaVersion+'"';
+			$html += '://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version='+this._version+","+this._majorRevision+","+this._minorRevision+","+this._betaVersion+'"';
 		} else
 			$html = "<embed";
 		
@@ -254,7 +254,7 @@ unFocus.SwfHTML.prototype = {
 		
 		// outputs the rest of the platform specific stuff
 		if ($ActiveX)
-			$html += '"></object>';
+			$html += '</object>';
 		else
 			$html += '" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>';
 		return $html;
