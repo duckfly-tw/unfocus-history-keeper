@@ -100,6 +100,10 @@ function Keeper() {
 	 * Sometimes, bugs related to history management can be tied even to a specific skin in browsers
 	 * like Opera.
 	 */
+	// opera
+	if (history.navigationMode)
+		history.navigationMode = 'compatible';
+	
 	// Safari 2.04 and less (and WebKit less than 420 - these hacks are not needed by the most recent nightlies)
 	// :TODO: consider whether this aught to check for Safari or WebKit - is this a safar problem, or a does it
 	// happen in other WebKit based software? OmniWeb (WebKit 420+) seems to work, though there's a sync issue.
@@ -182,11 +186,10 @@ function Keeper() {
 		_intervalID = setInterval(_watchHistoryLength, _pollInterval);
 		
 	// IE 5.5+ Windows
-	} else if (typeof ActiveXObject != "undefined" && window.print && 
-			   !window.opera && navigator.userAgent.match(/MSIE (\d+\.\d+)/)[1] >= 5.5) {
+	} else if (/*@cc_on!@*/0 && navigator.userAgent.match(/MSIE (\d+\.\d+)/)[1] >= 5.5) {
 		
 		// :HACK: Quick and dirty IE8 support (makes IE8 use standard timer method).
-		if (navigator.userAgent.match(/MSIE (\d+\.\d+)/)[1] >= 8)
+		if (document.documentMode && document.documentMode >= 8)
 			return;
 		
 		/* iframe references */
