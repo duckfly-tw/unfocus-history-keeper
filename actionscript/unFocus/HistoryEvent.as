@@ -2,20 +2,36 @@
 {
 	import flash.events.Event;
 	
+	/**
+	 * HistoryEvent
+	 * 
+	 * @author Kevin Newman
+	 */
 	public class HistoryEvent extends Event
 	{
+		/**
+		 * Dispatched when the location hash changes, even when you just set it.
+		 */
 		public static const HASH_CHANGE:String = "hashChange";
 		
-		private var _hash:String;
+		/**
+		 * The protected hash value property.
+		 */
+		protected var _hash:String;
+		
+		/**
+		 * The new hash (deep link) value.
+		 */
 		public function get hash():String {
 			return _hash;
 		}
 		
 		/**
-		* Constructor.
-		* @param The type of HistoryEvent.
-		* @param The new/current hash value.
-		*/
+		 * Constructor.
+		 * 
+		 * @param type The type of HistoryEvent.
+		 * @param aHash The new/current hash value.
+		 */
 		public function HistoryEvent(type:String, aHash:String)
 		{
 			super(type);
@@ -23,14 +39,14 @@
 		}
 		
 		/**
-		* Creates and returns a copy of the current instance.
-		* @return A copy of the current instance.
-		*/
+		 * Creates and returns a copy of the current instance.
+		 * 
+		 * @return A copy of the current instance.
+		 */
 		public override function clone():Event
 		{
 			return new HistoryEvent(type, _hash);
 		}
 		
 	}
-	
 }
