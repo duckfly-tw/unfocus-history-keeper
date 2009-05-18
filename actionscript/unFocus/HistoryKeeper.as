@@ -86,7 +86,7 @@
 						'unFocus.History.addEventListener("historyChange",function(h){unFocus.SwfUtilities.getSwfReference("' +
 							ExternalInterface.objectID + '").updateFromHistory(h)});'
 					);
-					_currentHash = ExternalInterface.call("unFocus_History.getCurrent");
+					_currentHash = ExternalInterface.call("unFocus.History.getCurrent");
 					_available = true;
 				}
 				catch(e:Error) {
