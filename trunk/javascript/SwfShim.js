@@ -95,7 +95,7 @@ unFocus.SwfShim.prototype.getHTML = function() {
 		) useEI = true;
 	}
 	
-	if (useEI) {
+	if (useEI || this.shimMode) {
 		unFocus.SwfHTML.prototype.setSrc.call(this,this._shimSwfUrl);
 		
 		this.addFlashvar("useExpressInstall", "true");
