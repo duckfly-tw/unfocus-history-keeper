@@ -1,6 +1,6 @@
 /*
-unFocus.FlashPlayerInfo, version 1.1 b7 (beta) (2008/05/20)
-Copyright: 2005-2008, Kevin Newman (http://www.unfocus.com/Projects/)
+unFocus.FlashPlayerInfo, version 1.1 b8 (beta) (2009/05/29)
+Copyright: 2005-2009, Kevin Newman (http://www.unfocus.com/Projects/)
 
 This file is part of unFocus.History Keeper.
 
@@ -23,7 +23,8 @@ unFocus.FlashPlayerInfo = (function() {
 		_betaVersion = 0,
 		_versionRaw = "",
 		_playerType = "",
-		_releaseCode = "";
+		_releaseCode = "",
+		_updateVer = 0;
 	
 	// detection work
 	if (navigator.plugins && navigator.plugins.length > 0) {
@@ -69,7 +70,9 @@ unFocus.FlashPlayerInfo = (function() {
 			_majorRevision = _versionTemp[1];
 			_minorRevision = _versionTemp[2];
 			_betaVersion = _versionTemp[3];
-			if (_versionTemp[3]>0) _beta = true;
+			// Flash Player 10+ uses the last place as a build number, so we
+			// can't make the same assumptions for 10+.
+			if (_version < 10 && _versionTemp[3]>0) _beta = true;
 			// if the last number is 0, assume this is a release version
 			else _releaseCode = "r";
 		}
@@ -110,6 +113,18 @@ unFocus.FlashPlayerInfo = (function() {
 		else _version = 2;
 	}
 	
+	// Flash Player 9 update versions.
+	// http://en.wikipedia.org/wiki/Adobe_Flash_Player#History
+	if (_version == 9) {
+		if (_minorRevision >= 115)
+			_updateVer = 3;
+		// :NOTE: This linux check is weak, it should use the internal flash player "LNX" flag. doh well. :-)
+		else if (_minorRevision >= 48 || (_minorRevision >= 47 && !/Linux/.test(navigator.userAgent)))
+			_updateVer = 2;
+		else if (_minorRevision > 28)
+			_updateVer = 1;
+	}
+	
 	// public/priveleged Getters
 	var FlashPlayerInfo = {
 		isInstalled: function() {
@@ -119,7 +134,7 @@ unFocus.FlashPlayerInfo = (function() {
 			return _beta;
 		},
 		getVersion: function() {
-			return _version;
+			return Number(_version +"."+ _majorRevision);
 		},
 		getMajorRevision: function() {
 			return _majorRevision;
@@ -142,7 +157,15 @@ unFocus.FlashPlayerInfo = (function() {
 		},
 		getReleaseCode: function() {
 			return _releaseCode;
+		},
+		getUpdateVersion: function() {
+			return _updateVer;
 		}
 	};
+	// new methods for Flash Player 10+
+	// http://weblogs.macromedia.com/emmy/archives/2008/10/a_small_improvement_to_our_version_numbering_aka_why_there_wont_be_a_flash_player_10_update_1.html
+	FlashPlayerInfo.getMajorVersion = FlashPlayerInfo.getVersion;
+	FlashPlayerInfo.getMinorVersion = FlashPlayerInfo.getMajorRevision;
+	FlashPlayerInfo.getBugfixVersion = FlashPlayerInfo.getMinorRevision;
 	return FlashPlayerInfo;
 })();
