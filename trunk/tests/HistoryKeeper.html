@@ -4,8 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>QuickLoader</title>
 <!--
-unFocus.Tests (2007/09/11)
-Copyright: 2007, Kevin Newman (http://www.unfocus.com/Projects/)
+unFocus.Tests (2009/05/29)
+Copyright: 2007-2009, Kevin Newman (http://www.unfocus.com/)
 
 This file is part of unFocus.History Keeper.
 
@@ -17,7 +17,6 @@ unFocus.History Keeper is distributed in the hope that it will be useful, but WI
 You should have received a copy of the GNU Lesser General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <script type="text/javascript" src="../javascript/EventManager.js"></script>
-<script type="text/javascript" src="../javascript/QuickLoader.js"></script>
 <script type="text/javascript" src="../javascript/History.js"></script>
 <script type="text/javascript">
 // My mini "Ajax" (DHTML) app
@@ -28,7 +27,7 @@ function PromptMe() {
 	// the sole public method to manipulate this application
 	this.promtForNew = function() {
 		// do the stuff that changes the state
-		var newVal = window.prompt("Please enter some value to store in the history and url");
+		var newVal = document.getElementById("newHistoryVal").value;
 		// Set the new history hash. This value must be a string, so serializtion is up to you.
 		// JSON works nicely, if you need something quick: http://www.json.org
 		// When a new entry is made, unFocus.History will notify the historyListener 
@@ -60,23 +59,21 @@ function PromptMe() {
 	// In this demo app, the historyListener can handle the task.
 	this.historyListener(unFocus.History.getCurrent());
 };
-// instantiate and inialize the app. DOM has to be ready so we can get a ref to
-// the HistoryState DOM element (aka the view), so we use QuickLoader to make
-// sure it's ready.
-var demoApp;
-unFocus.Utilities.QuickLoader.addListener(function() {
-	demoApp = new PromptMe();
-});
-
-// testing for page refreshes
-unFocus.Utilities.QuickLoader.addListener(function() {
-	alert('Quick Loader called');
-});
 </script>
 </head>
 
 <body onLoad="alert('body tag onload called');">
 <p id="HistoryState">Current State Value: nothin'</p>
-<a href="#" onClick="demoApp.promtForNew();return false;">Add a History Entry</a>
+<form name="form1" method="post" action="">
+	<label>Enter a New History:
+		<input type="text" name="newHistoryVal" id="newHistoryVal">
+	</label>
+</form>
+<p><a href="#" onClick="demoApp.promtForNew();return false;">Add a History Entry</a></p>
+<script type="text/javascript">
+// instantiate and inialize the app.
+var demoApp;
+demoApp = new PromptMe();
+</script>
 </body>
 </html>
