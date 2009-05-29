@@ -105,12 +105,6 @@ unFocus.FlashPlayerInfo = (function() {
 			_installed = true;
 			_playerType = "ActiveX";
 		}
-	} else if (/WebTV/.test(navigator.userAgent)) { // WebTV
-		_playerType = "WebTV";
-		_versionRaw = navigator.userAgent.match(/WebTV\/(\d\.\d)/)[1];
-		if (_versionRaw > 2.5) _version = 4;
-		else if (_versionRaw == 2.5) _version = 3;
-		else _version = 2;
 	}
 	
 	// Flash Player 9 update versions.
