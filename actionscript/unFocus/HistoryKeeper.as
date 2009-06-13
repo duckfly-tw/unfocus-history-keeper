@@ -1,4 +1,9 @@
-﻿package unFocus
+﻿/*
+unFocus.HistoryKeeper - (svn $Revision$) $Date$
+Copyright: 2009, Kevin Newman - http://www.unfocus.com
+http://www.opensource.org/licenses/mit-license.php
+*/
+ package unFocus
 {
 	import flash.events.EventDispatcher;
 	import flash.external.ExternalInterface;
