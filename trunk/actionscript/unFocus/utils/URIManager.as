@@ -1,4 +1,9 @@
-﻿package unFocus.utils
+﻿/*
+unFocus.utils.URIManager - (svn $Revision$) $Date$
+Copyright: 2009, Kevin Newman - http://www.unfocus.com
+http://www.opensource.org/licenses/mit-license.php
+*/
+ package unFocus.utils
 {
 	import 	flash.utils.Dictionary;
 	
