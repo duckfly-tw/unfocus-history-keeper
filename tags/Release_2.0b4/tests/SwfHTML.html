@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Test - unFocus.SwfHTML</title>
+<!--
+unFocus.Tests (svn $Revision$) $Date$
+Copyright: 2007-2009, Kevin Newman (http://www.unfocus.com/)
+http://www.opensource.org/licenses/mit-license.php
+-->
+<script type="text/javascript" src="../javascript/SwfHTML.js"></script>
+</head>
+
+<body>
+<script type="text/javascript">
+	var hp_bl_ID = 'test_swf';
+	var hp_bl_HTML = new unFocus.SwfHTML();
+	hp_bl_HTML.setWidth(240);
+	hp_bl_HTML.setHeight(320);
+	hp_bl_HTML.setId(hp_bl_ID);
+	hp_bl_HTML.setName(hp_bl_ID);
+	hp_bl_HTML.setScale('noscale');
+	hp_bl_HTML.setSAlign('tl');
+	hp_bl_HTML.setWMode('opaque');
+	hp_bl_HTML.setBGColor('#FFFFFF');
+	
+	hp_bl_HTML.setSrc('test6.swf');
+	
+	hp_bl_HTML.addFlashvar('flashvar1', 'test value, as2');
+	
+	hp_bl_HTML.writeToDocument(document);
+</script>
+<script type="text/javascript">
+	var hp_bl_ID = 'test_swf';
+	var hp_bl_HTML = new unFocus.SwfHTML();
+	hp_bl_HTML.setWidth(240);
+	hp_bl_HTML.setHeight(320);
+	hp_bl_HTML.setId(hp_bl_ID);
+	hp_bl_HTML.setName(hp_bl_ID);
+	hp_bl_HTML.setScale('noscale');
+	hp_bl_HTML.setSAlign('tl');
+	hp_bl_HTML.setWMode('opaque');
+	hp_bl_HTML.setBGColor('#FFFFFF');
+	
+	hp_bl_HTML.setSrc('test9.swf');
+	
+	hp_bl_HTML.addFlashvar('flashvar1', 'test value, as3');
+	
+	hp_bl_HTML.writeToDocument(document);
+</script>
+</body>
+</html>

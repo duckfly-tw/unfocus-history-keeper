@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Test - unFocus.History Keeper</title>
+<!--
+unFocus.Tests (svn $Revision$) $Date$
+Copyright: 2007-2009, Kevin Newman (http://www.unfocus.com/)
+http://www.opensource.org/licenses/mit-license.php
+-->
+<script type="text/javascript" src="../javascript/FlashPlayerInfo.js"></script>
+</head>
+
+<body>
+<p>unFocus.History Keeper, Testing <strong>unFocus.FlashPlayerInfo</strong>:</p>
+<p>Testing</p>
+<script type="text/javascript">
+var fpInfo = unFocus.FlashPlayerInfo;
+
+document.write (
+	"<table><tbody>",
+	"<tr><td>isInstalled() </td><td>"					+ fpInfo.isInstalled(),
+	"</td></tr><tr><td>isBeta() </td><td>"				+ fpInfo.isBeta(),
+	"</td></tr><tr><td>getVersion() </td><td>"			+ fpInfo.getVersion(),
+	"</td></tr><tr><td>getMajorRevision() </td><td>"	+ fpInfo.getMajorRevision(),
+	"</td></tr><tr><td>getMinorRevision() </td><td>"	+ fpInfo.getMinorRevision(),
+	"</td></tr><tr><td>getVersionRaw() </td><td>"		+ fpInfo.getVersionRaw(),
+	"</td></tr><tr><td>getPlayerType() </td><td>"		+ fpInfo.getPlayerType(),
+	"</td></tr><tr><td>getReleaseCode() </td><td>"		+ fpInfo.getReleaseCode(),
+	"</td></tr><tr><td>getMajorVersion() </td><td>"		+ fpInfo.getMajorVersion(),
+	"</td></tr><tr><td>getMinorVersion() </td><td>"		+ fpInfo.getMinorVersion(),
+	"</td></tr><tr><td>getBugfixVersion() </td><td>"	+ fpInfo.getBugfixVersion(),
+	"</td></tr><tr><td>getUpdateVersion() </td><td>"	+ fpInfo.getUpdateVersion(),
+	"</td></tr></tbody></table>"
+);
+document.write("<br>");
+document.write(fpInfo.getVersion() +'.'+ fpInfo.getMajorRevision() +' r' + fpInfo.getMinorRevision());
+if (fpInfo.isBeta())
+	document.write(' '+fpInfo.getReleaseCode() + fpInfo.getBetaVersion());
+document.write(' : ' + fpInfo.getVersionRaw());
+</script>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Some releases of the Flash Player which are labeled as beta, and have an internal beta number (like 9.0.60.xx) contain the release code of &quot;r&quot;, which I assumed meant release at one point. So there is no real good way to test for beta status, except to check the $version variable from within Flash, in PlugIn based Players.</li>
+</ul>
+</body>
+</html>

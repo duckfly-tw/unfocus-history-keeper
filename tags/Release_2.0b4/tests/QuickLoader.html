@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>QuickLoader</title>
+<!--
+unFocus.Tests (svn $Revision$) $Date$
+Copyright: 2007-2009, Kevin Newman (http://www.unfocus.com/)
+http://www.opensource.org/licenses/mit-license.php
+-->
+<script type="text/javascript" src="../javascript/EventManager.js"></script>
+<script type="text/javascript" src="../javascript/QuickLoader.js"></script>
+</head>
+
+<body onLoad="alert('body tag onload called');">
+<p>Testing QuickLoader (you should get an alert box with "Quick Loader called" first.</p>
+<script type="text/javascript">
+unFocus.Utilities.QuickLoader.addListener(function() {
+	alert('Quick Loader called');
+});
+// borrowed from Dean Edwards (thanks Dean!)
+// create a unique image source so that this page works with continued testing
+var src = "http://www.nasa.gov/images/content/84857main_EC04-0325-23_lg.jpg?" + Number(new Date);
+document.write("<img src=" + src + " height=240 width=300>");
+</script>
+</body>
+</html>
