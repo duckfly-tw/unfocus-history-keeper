@@ -3,13 +3,12 @@ unFocus.HistoryKeeper - (svn $Revision$) $Date$
 Copyright: 2009, Kevin Newman - http://www.unfocus.com
 http://www.opensource.org/licenses/mit-license.php
 */
- package unFocus
+package unFocus
 {
 	import flash.events.EventDispatcher;
 	import flash.external.ExternalInterface;
 	
 	import unFocus.HistoryEvent;
-	import unFocus.JSCommunicator;
 	
 	/**
 	 * Wrap calls to unFocus.History JS utility.
@@ -87,7 +86,6 @@ http://www.opensource.org/licenses/mit-license.php
 					// This allows us to bypass eval, which creates noticable hicups in animations.
 					// Also setup event listener to notify swf that the history has changed.
 					JSCommunicator.invoke(
-						"window.unFocus_History_addHistory = unFocus.History.addHistory;" +
 						'unFocus.History.addEventListener("historyChange",function(h){unFocus.SwfUtilities.getSwfReference("' +
 							ExternalInterface.objectID + '").updateFromHistory(h)});'
 					);
@@ -126,7 +124,7 @@ http://www.opensource.org/licenses/mit-license.php
 		{
 			_currentHash = aHash;
 			if (_available)
-				JSCommunicator.invoke("unFocus_History_addHistory", aHash);
+				JSCommunicator.invoke("unFocus.History.addHistory", aHash);
 		}
 		
 		/**

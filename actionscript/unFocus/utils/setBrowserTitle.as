@@ -5,7 +5,7 @@ http://www.opensource.org/licenses/mit-license.php
 */
  package unFocus.utils
 {
-	import unFocus.JSCommunicator;
+	import flash.external.ExternalInterface;
 	
 	/**
 	 * @author Kevin Newman
@@ -16,12 +16,6 @@ http://www.opensource.org/licenses/mit-license.php
 	 */
 	public function setBrowserTitle(t:String):void
 	{
-		if (!isInit)
-		{
-			JSCommunicator.invoke("window.unFocus_utils_setBrowserTitle=function(t){document.title=t}");
-			isInit = true;
-		}
-		JSCommunicator.invoke("unFocus_utils_setBrowserTitle", t);
+		ExternalInterface.call("function(){document.title='"+t+"'}");
 	}
 }
-internal var isInit:Boolean = false;
