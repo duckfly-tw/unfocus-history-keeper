@@ -39,7 +39,34 @@ http://www.opensource.org/licenses/mit-license.php
 				isInit = true;
 				// NOTE: try/catch is necessary because sometimes ExternalInterface.available is unreliable.
 				try {
-					ExternalInterface.call("unFocus.AS3Communicator.createFSCommand", ExternalInterface.objectID);
+					// :NOTE: There is a bug (or something) in Firefox that prevents us from using eval here. Instead we use new Function.
+					// I borrowed Adobe's method for getting around that. http://blog.iconara.net/2007/01/20/abusing-the-externalinterface/
+					var funcBody:String = '(args)?(window[cmd])?window[cmd](args):(new Function(cmd + "(\'"+args+"\')")).call(undefined,[]):(new Function(cmd)).call(undefined,[]);'
+					
+					switch (Capabilities.playerType) {
+						case "ActiveX":
+							ExternalInterface.call(
+								'function(){'+
+									'var script=window.document.createElement(\'<script event="FSCommand(cmd,args)" for="'+ExternalInterface.objectID+'">\');'+
+									'script.text="(args)?(window[cmd])?window[cmd](args):eval(cmd)(args):eval(cmd);";'+
+									'window.document.getElementsByTagName("head").item(0).appendChild(script);'+
+								'}'
+							);
+						break;
+						case "PlugIn":
+							ExternalInterface.call(
+								'function(){'+
+									'window["'+ExternalInterface.objectID+'_DoFSCommand"]=function(cmd,args){'+
+										'(args)?(window[cmd])?window[cmd](args):(new Function(cmd + "(\'"+args+"\')")).call(undefined,[]):(new Function(cmd)).call(undefined,[]);'+
+									'};'+
+								'}'
+							);
+						break;
+						/*case "Desktop":
+						case "External":
+						case "StandAlone":*/
+					}
+					
 				}
 				catch (e:Error) {
 					_available = false;
