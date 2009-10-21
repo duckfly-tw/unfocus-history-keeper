@@ -8,6 +8,8 @@ http://www.opensource.org/licenses/mit-license.php
 	import flash.system.fscommand;
 	import flash.external.ExternalInterface;
 	
+	import flash.system.Capabilities;
+	
 	/**
 	 * JSCommunicator - A simple wrapper for fscommand. NOTE: This currently hijacks fscommand. :-D
 	 * 
