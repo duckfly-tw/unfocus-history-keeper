@@ -9,7 +9,8 @@ http://www.opensource.org/licenses/mit-license.php
 	
 	/**
 	 * @author Kevin Newman
-	 * 
+	 */
+	/**
 	 * Sets the title of the html page the current swf is embedded on.
 	 * 
 	 * @param title The title to set document.title.

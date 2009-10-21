@@ -15,17 +15,18 @@ package unFocus
 	public class HistoryEvent extends Event
 	{
 		/**
-		 * Dispatched when the location hash changes, even when you just set it.
+		 * Dispatched whenever the location hash changes.
+		 * @eventType hashChange
 		 */
 		public static const HASH_CHANGE:String = "hashChange";
 		
 		/**
 		 * The protected hash value property.
 		 */
-		protected var _hash:String;
+		private var _hash:String;
 		
 		/**
-		 * The new hash (deep link) value.
+		 * The current hash (deep link) value.
 		 */
 		public function get hash():String {
 			return _hash;

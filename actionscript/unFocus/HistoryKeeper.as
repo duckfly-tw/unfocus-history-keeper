@@ -13,6 +13,9 @@ package unFocus
 	/**
 	 * Wrap calls to unFocus.History JS utility.
 	 * 
+	 * <p>Javascript dependencies:<br/>
+	 *  - <code>unFocus.History</code> (and <code>unFocus.EventManager</code>)</p>
+	 * 
 	 * @author Kevin Newman
 	 */
 	public final class HistoryKeeper extends EventDispatcher
@@ -40,6 +43,8 @@ package unFocus
 		 * Gets or sets the current value of <code>window.location.hash</code>. Will also set
 		 * <code>window.location.hash</code>, creating a history entry. This is a property 
 		 * based shortcut for addHistory method.
+		 * 
+		 * <p>Will trigger <code>HistoryEvent.HASH_CHANGE</code></p>
 		 */
 		public function get hash():String {
 			return _currentHash;
@@ -60,6 +65,7 @@ package unFocus
 		
 		/**
 		 * Constructor. (should not be called with new operator.)
+		 * @private
 		 * 
 		 * @param key The internal key class to unlock the singleton.
 		 * 
@@ -68,7 +74,7 @@ package unFocus
 		function HistoryKeeper(key:HistoryKeeperKey)
 		{
 			if (key == null)
-				throw new Error("Error - Instantiation failed: Use HistoryKeeper.getInstance() instead of new.");
+				throw new Error("Error - Use HistoryKeeper.getInstance() instead of new.");
 			
 			init();
 		}
@@ -81,13 +87,18 @@ package unFocus
 		{
 			if (ExternalInterface.available) {
 				try {
-					ExternalInterface.addCallback("updateFromHistory", updateFromHistory);
 					// Setup a fast path to envoke addHistory.
-					// This allows us to bypass eval, which creates noticable hicups in animations.
+					ExternalInterface.addCallback("updateFromHistory", updateFromHistory);
 					// Also setup event listener to notify swf that the history has changed.
-					JSCommunicator.invoke(
-						'unFocus.History.addEventListener("historyChange",function(h){unFocus.SwfUtilities.getSwfReference("' +
-							ExternalInterface.objectID + '").updateFromHistory(h)});'
+					
+					ExternalInterface.call(
+						"function(s,id){"+
+							'id="' + ExternalInterface.objectID +'";'+
+							"if(document.embeds&&document.embeds[id])s=document.embeds[id];"+
+							"else s=document[id]||document.getElementById(id);"+
+							'unFocus.History.addEventListener("historyChange",' +
+								"function(h){s.updateFromHistory(h)});"+
+						"}"
 					);
 					_currentHash = ExternalInterface.call("unFocus.History.getCurrent");
 					_available = true;
@@ -124,7 +135,7 @@ package unFocus
 		{
 			_currentHash = aHash;
 			if (_available)
-				JSCommunicator.invoke("unFocus.History.addHistory", aHash);
+				ExternalInterface.call("unFocus.History.addHistory", aHash);
 		}
 		
 		/**
