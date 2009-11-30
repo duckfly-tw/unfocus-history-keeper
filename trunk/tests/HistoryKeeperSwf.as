@@ -1,4 +1,9 @@
-﻿package
+﻿/*
+unFocus.HistoryKeeperSwf - (svn $Revision$) $Date$
+Copyright: 2009, Kevin Newman - http://www.unfocus.com
+http://www.opensource.org/licenses/mit-license.php
+*/
+package
 {
 	import flash.display.Shape;
 	import flash.display.Sprite;
