@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>HistoryKeeperSwf</title>
+<!--
+unFocus.Tests (svn $Revision: 32 $) $Date: 2009-06-13 03:32:05 -0400 (Sat, 13 Jun 2009) $
+Copyright: 2007-2009, Kevin Newman (http://www.unfocus.com/)
+http://www.opensource.org/licenses/mit-license.php
+-->
+<script type="text/javascript" src="../javascript/EventManager.js"></script>
+<script type="text/javascript" src="../javascript/History.js"></script>
+<script type="text/javascript" src="../javascript/SwfHTML.js"></script>
+</head>
+
+<body>
+<div id="FlashContent">
+<p>Please <a href="http://get.adobe.com/flashplayer/">install Adobe Flash Player 9</a> 
+or better to view this site.</p>
+</div>
+<script type="text/javascript">
+var swf_ID = "theSwf";
+var swf_HTML = new unFocus.SwfHTML();
+	swf_HTML.setWidth(550);
+	swf_HTML.setHeight(400);
+	swf_HTML.setId(swf_ID);
+	swf_HTML.setName(swf_ID);
+	swf_HTML.setScale('noscale');
+	swf_HTML.setBGColor('#333333');
+	swf_HTML.setAllowscriptaccess("always");
+	swf_HTML.setSrc('HistoryKeeperSwf.swf');
+	swf_HTML.outputToInnerHTML(document.getElementById('FlashContent'));
+</script>
+</body>
+</html>
