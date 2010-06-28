@@ -74,8 +74,8 @@ unFocus.SwfShim.prototype.getHTML = function() {
 		}
 		
 		var reqVersion = this._version;
-		if (this._majorVersion)
-			reqVersion = reqVersion + '.' + this._majorVersion;
+		if (this._majorRevision)
+			reqVersion = reqVersion + '.' + this._majorRevision;
 		
 		var reqMinorRevision = this._minorRevision;
 		

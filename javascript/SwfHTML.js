@@ -181,7 +181,7 @@ unFocus.SwfHTML.prototype = {
 		this._majorRevision = $majorRevision;
 	},
 	setMinorRevision: function($minorRevision) {
-		this._mainorRevision = $minorRevision;
+		this._minorRevision = $minorRevision;
 	},
 	setBetaVersion: function($betaVersion) {
 		this._betaVersion = $betaVersion;
