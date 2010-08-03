@@ -34,7 +34,7 @@ document.write (
 	"</td></tr></tbody></table>"
 );
 document.write("<br>");
-document.write(fpInfo.getVersion() +'.'+ fpInfo.getMajorRevision() +' r' + fpInfo.getMinorRevision());
+document.write(fpInfo.getMajorVersion()+'.' + fpInfo.getMinorVersion() +' r' + fpInfo.getMinorRevision());
 if (fpInfo.isBeta())
 	document.write(' '+fpInfo.getReleaseCode() + fpInfo.getBetaVersion());
 document.write(' : ' + fpInfo.getVersionRaw());
