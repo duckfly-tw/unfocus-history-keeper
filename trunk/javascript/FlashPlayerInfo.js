@@ -146,11 +146,13 @@ unFocus.FlashPlayerInfo = (function() {
 		},
 		getUpdateVersion: function() {
 			return _updateVer;
+		},
+		// 3 new methods for Flash Player 10+
+		// http://weblogs.macromedia.com/emmy/archives/2008/10/a_small_improvement_to_our_version_numbering_aka_why_there_wont_be_a_flash_player_10_update_1.html
+		getMajorVersion: function () {
+			return _version;
 		}
 	};
-	// new methods for Flash Player 10+
-	// http://weblogs.macromedia.com/emmy/archives/2008/10/a_small_improvement_to_our_version_numbering_aka_why_there_wont_be_a_flash_player_10_update_1.html
-	FlashPlayerInfo.getMajorVersion = FlashPlayerInfo.getVersion;
 	FlashPlayerInfo.getMinorVersion = FlashPlayerInfo.getMajorRevision;
 	FlashPlayerInfo.getBugfixVersion = FlashPlayerInfo.getMinorRevision;
 	return FlashPlayerInfo;
